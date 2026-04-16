@@ -607,8 +607,6 @@ ORDER BY total_net_impact DESC;
 **Production Note**:
 - Reversal logic must handle late-arriving reversals. Stream-based pipelines recommended for real-time.
 
----
-
 ## SCENARIO 6: NDC SUPERSESSION & PRODUCT CONTINUITY
 
 **Assumptions**:
@@ -673,8 +671,6 @@ ORDER BY total_quantity DESC;
 **Production Note**:
 - NDC mapping must align with FDA Orange Book updates. Schedule quarterly refresh.
 
----
-
 ## SCENARIO 7: DIR FEE LAG & RETROACTIVE ADJUSTMENTS
 
 **Assumptions**:
@@ -731,8 +727,6 @@ SELECT * FROM net_revenue ORDER BY service_month, net_revenue DESC;
 
 **Production Note**:
 - DIR fee reconciliation requires audit trail. Log `received_date` vs `service_month` delta.
-
----
 
 ## SCENARIO 8: REBATE WATERFALL & CONTRACT ALIGNMENT
 
@@ -797,8 +791,6 @@ ORDER BY total_rebate DESC;
 **Production Note**:
 - Rebate waterfall must align with PBM contract terms. Audit log required for compliance.
 
----
-
 ## SCENARIO 9: 340B COMPLIANCE & ELIGIBILITY VALIDATION
 
 **Assumptions**:
@@ -857,8 +849,6 @@ ORDER BY flagged_fills DESC;
 
 **Production Note**:
 - 340B compliance triggers HRSA audits. False positives costly. Validate eligibility logic quarterly.
-
----
 
 ## SCENARIO 10: PRIOR AUTHORIZATION ROUTING & DECISION LATENCY
 
