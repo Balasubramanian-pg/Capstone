@@ -1622,8 +1622,6 @@ SELECT * FROM specialty_agg ORDER BY avg_days_supply DESC;
 **Production Note**:
 - Mail order exclusion applied after join to avoid filtering out claims before specialty assignment.
 
----
-
 ## SCENARIO 3: WINDOW FUNCTIONS & ADHERENCE COHORTS
 
 **Assumptions**:
