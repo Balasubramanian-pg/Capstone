@@ -285,9 +285,8 @@ Each scenario builds on the previous. Success requires correctness, performance,
 - Include at least one data validation check per scenario.
 - HIPAA/PII handling explicitly noted where applicable.
 
----
 
-# ARTEFACT 2: COMPLETE SOLUTIONS, QUERIES, ASSUMPTIONS, EXPLANATIONS
+# COMPLETE SOLUTIONS, QUERIES, ASSUMPTIONS, EXPLANATIONS
 
 ## SCENARIO 1: BASELINE METRIC VALIDATION
 
@@ -340,8 +339,6 @@ ORDER BY fill_month DESC, sponsor_type;
 
 **Production Note**:
 - Avoid joining `DIM_MEMBERS` at this stage. Membership status changes introduce fan-out if not aligned to claim date.
-
----
 
 ## SCENARIO 2: CARDINALITY & FAN-OUT TRAPS
 
@@ -402,8 +399,6 @@ SELECT * FROM specialty_agg ORDER BY avg_days_supply DESC;
 
 **Production Note**:
 - Mail order exclusion applied after join to avoid filtering out claims before specialty assignment.
-
----
 
 ## SCENARIO 3: WINDOW FUNCTIONS & ADHERENCE COHORTS
 
@@ -488,8 +483,6 @@ ORDER BY pdc DESC;
 
 **Production Note**:
 - PDC is standard for CMS Star Ratings. Ensure capping at 1.0 aligns with regulatory definitions.
-
----
 
 ## SCENARIO 4: SLOWLY CHANGING DIMENSIONS & FORMULARY ALIGNMENT
 
