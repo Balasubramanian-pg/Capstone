@@ -2400,8 +2400,6 @@ ORDER BY service_month DESC;
 **Production Note**:
 - Financial dashboards require resilient date logic. Never rely on single timestamp without ingestion buffer.
 
----
-
 ## PRODUCTION READINESS CHECKLIST (ALL SCENARIOS)
 
 1. **Logical Correctness**: Output matches known benchmarks. Edge cases handled explicitly.
@@ -2412,8 +2410,6 @@ ORDER BY service_month DESC;
 6. **Governance**: Row access policies, dynamic masking, RBAC alignment verified. HIPAA compliance noted.
 7. **Testing**: Validation steps documented. Cross-reference sources identified.
 8. **Documentation**: Assumptions stated. Trade-offs explained. Postmortem template ready.
-
----
 
 This capstone forces the new joiner to confront architecture, cost, ambiguity, and production reality in the pharma domain. Each scenario builds a muscle: correctness, performance, idempotency, governance, debugging, and communication. SQL is not syntax here. It is a negotiation with data, regulation, and scale.
 
