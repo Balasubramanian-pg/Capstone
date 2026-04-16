@@ -162,8 +162,6 @@ Each scenario builds on the previous. Success requires correctness, performance,
 **Excel Performance Note**:
 - Convert lookup tables to Excel Tables (`Ctrl+T`). Enables dynamic range expansion. Avoid `VLOOKUP` for left-column mismatches.
 
----
-
 ## SCENARIO 3: DYNAMIC ARRAY FILTERING & MULTI-CRITERIA AGGREGATION
 
 **Assumptions**:
@@ -190,8 +188,6 @@ Each scenario builds on the previous. Success requires correctness, performance,
 
 **Excel Performance Note**:
 - `FILTER` recalculates on source change. Keep arrays under 500K rows for smooth performance. Use `.xlsb` if larger.
-
----
 
 ## SCENARIO 4: POWER PIVOT DATA MODELING & RELATIONSHIPS
 
@@ -270,8 +266,6 @@ CALCULATE(
 **Excel Performance Note**:
 - Set Calculation to Manual before running large Data Tables. Switch to Automatic after. Prevents lag.
 
----
-
 ## SCENARIO 7: LAMBDA & CUSTOM REUSABLE FUNCTIONS
 
 **Assumptions**:
@@ -298,8 +292,6 @@ CALCULATE(
 
 **Excel Performance Note**:
 - `LAMBDA` recalculates like standard formulas. Avoid nesting >3 deep. Use `NAME.MANAGER` to document scope.
-
----
 
 ## SCENARIO 8: VBA AUTOMATION & ERROR-RESILIENT REFRESH
 
@@ -346,8 +338,6 @@ End Sub
 **Excel Performance Note**:
 - Store macro in `.xlsm`. Sign with digital certificate for enterprise trust. Disable macro warnings via GPO if deployed.
 
----
-
 ## SCENARIO 9: DATA VALIDATION & INPUT CONTROL GOVERNANCE
 
 **Assumptions**:
@@ -367,8 +357,6 @@ End Sub
 
 **Excel Performance Note**:
 - Avoid `INDIRECT` in validation lists. Use named ranges. Enable `Ignore blank` only when intentional.
-
----
 
 ## SCENARIO 10: VERSION CONTROL, AUDIT TRAIL & DEPENDENCY MAPPING
 
