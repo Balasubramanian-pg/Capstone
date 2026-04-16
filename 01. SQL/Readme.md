@@ -1,6 +1,7 @@
 # CONTEXT, PROBLEM STATEMENT, 15 SCENARIOS
 
 ## 1. BUSINESS CONTEXT & ECOSYSTEM REALITY
+<img width="1167" height="781" alt="image" src="https://github.com/user-attachments/assets/f0a243bf-1ee6-4e46-b8ce-5d1dce572cda" />
 
 You are joining the Data Engineering & Analytics team at Nexus Pharma Solutions, a hybrid PBM, specialty pharmacy, and 340B compliance administrator. The organization processes 12 million pharmacy claims, 1.8 million medical claims, 450K retail transactions, and 90K rebate/DIR fee records monthly. Data flows from payers, pharmacies, manufacturers, wholesalers, and internal adjudication engines into a centralized Snowflake analytics warehouse.
 
