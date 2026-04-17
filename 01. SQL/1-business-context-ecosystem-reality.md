@@ -1,0 +1,8 @@
+## 1. BUSINESS CONTEXT & ECOSYSTEM REALITY
+<img width="1167" height="781" alt="image" src="https://github.com/user-attachments/assets/f0a243bf-1ee6-4e46-b8ce-5d1dce572cda" />
+
+You are joining the Data Engineering & Analytics team at Nexus Pharma Solutions, a hybrid PBM, specialty pharmacy, and 340B compliance administrator. The organization processes 12 million pharmacy claims, 1.8 million medical claims, 450K retail transactions, and 90K rebate/DIR fee records monthly. Data flows from payers, pharmacies, manufacturers, wholesalers, and internal adjudication engines into a centralized Snowflake analytics warehouse.
+
+The current state is functional but fragile. Dashboards report inconsistent member adherence metrics. Formulary tier changes are misaligned with claim adjudication dates. Rebate waterfall calculations drift from manufacturer contracts. DIR fee allocations arrive 6 to 14 days late, breaking monthly P&L closes. Compute costs are climbing 22% quarter-over-quarter. Stakeholders in Pharmacy Operations, PBM Contracting, 340B Compliance, and Real-World Evidence (RWE) research have lost trust in baseline metrics.
+
+Your mandate: stabilize reporting, standardize transformation logic, and train new joiners to write SQL that is performant, auditable, HIPAA-aware, and production-ready. This capstone simulates your first cross-functional assignment. You will work with late-arriving claims, NDC supersession tables, formulary SCDs, DIR fee reconciliation gaps, and PII/PHI exposure risks. Success is not returning rows. Success is delivering logic that survives scale, cost scrutiny, regulatory audit, and stakeholder interrogation.
