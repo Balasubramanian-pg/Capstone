@@ -1,0 +1,151 @@
+## 2. CORE DATA MODEL & SCHEMA DEFINITIONS
+
+All tables use Snowflake native types. Timestamps are UTC. Primary keys are enforced at ELT layer. Foreign keys are logical constraints tracked in dbt. PHI/PII columns are explicitly marked.
+
+### DIM_MEMBERS
+- `member_id` (VARCHAR, PK, PHI)
+- `first_name`, `last_name` (VARCHAR, PHI)
+- `dob` (DATE, PHI)
+- `gender` (VARCHAR)
+- `zip_code` (VARCHAR)
+- `plan_id` (VARCHAR)
+- `eligibility_status` (VARCHAR: active, suspended, terminated)
+- `risk_score` (DECIMAL(6,3))
+- `created_at`, `updated_at` (TIMESTAMP_NTZ)
+
+### DIM_PLANS
+- `plan_id` (VARCHAR, PK)
+- `plan_name` (VARCHAR)
+- `sponsor_type` (VARCHAR: commercial, medicare, medicaid, 340b, self_funded)
+- `effective_start_date`, `effective_end_date` (DATE)
+- `deductible`, `max_oop` (DECIMAL(10,2))
+- `created_at` (TIMESTAMP_NTZ)
+
+### DIM_DRUG_MASTER
+- `ndc` (VARCHAR, PK, 11-digit normalized)
+- `gpi` (VARCHAR)
+- `rxnorm_id` (INTEGER)
+- `brand_name`, `generic_name` (VARCHAR)
+- `drug_class` (VARCHAR)
+- `formulation` (VARCHAR: tablet, capsule, injection, infusion, topical)
+- `package_size` (INTEGER)
+- `package_uom` (VARCHAR)
+- `is_controlled` (BOOLEAN)
+- `created_at`, `updated_at` (TIMESTAMP_NTZ)
+
+### DIM_NDC_SUPERSESSION
+- `ndc_old` (VARCHAR)
+- `ndc_new` (VARCHAR)
+- `supersession_date` (DATE)
+- `supersession_reason` (VARCHAR: reformulation, manufacturer_change, package_size_change, discontinued)
+- `created_at` (TIMESTAMP_NTZ)
+
+### DIM_FORMULARY
+- `formulary_id` (VARCHAR, PK)
+- `plan_id` (VARCHAR, FK)
+- `ndc` (VARCHAR, FK)
+- `tier` (VARCHAR: 1, 2, 3, 4, 5, specialty, excluded)
+- `prior_auth_required` (BOOLEAN)
+- `step_therapy_required` (BOOLEAN)
+- `quantity_limit` (DECIMAL(8,2))
+- `effective_start_date`, `effective_end_date` (DATE)
+- `is_current` (BOOLEAN)
+- `created_at` (TIMESTAMP_NTZ)
+
+### FACT_PHARMACY_CLAIMS
+- `claim_id` (VARCHAR, PK)
+- `member_id` (VARCHAR, FK)
+- `ndc` (VARCHAR, FK)
+- `prescriber_npi` (VARCHAR)
+- `pharmacy_npi` (VARCHAR)
+- `fill_date` (DATE)
+- `days_supply` (INTEGER)
+- `quantity_dispensed` (DECIMAL(10,2))
+- `claim_status` (VARCHAR: adjudicated, reversed, pending, rejected)
+- `gross_amount` (DECIMAL(12,2))
+- `copay_amount` (DECIMAL(10,2))
+- `coinsurance_amount` (DECIMAL(10,2))
+- `payer_paid_amount` (DECIMAL(12,2))
+- `adjudication_date` (TIMESTAMP_NTZ)
+- `reversal_claim_id` (VARCHAR, nullable)
+- `created_at`, `updated_at` (TIMESTAMP_NTZ)
+
+### FACT_MEDICAL_CLAIMS
+- `claim_id` (VARCHAR, PK)
+- `member_id` (VARCHAR, FK)
+- `provider_npi` (VARCHAR)
+- `service_date` (DATE)
+- `icd_10_code` (VARCHAR)
+- `cpt_hcpcs_code` (VARCHAR)
+- `claim_status` (VARCHAR: paid, denied, pending, adjusted)
+- `billed_amount` (DECIMAL(12,2))
+- `allowed_amount` (DECIMAL(12,2))
+- `payer_paid_amount` (DECIMAL(12,2))
+- `member_responsibility` (DECIMAL(10,2))
+- `adjudication_date` (TIMESTAMP_NTZ)
+- `created_at` (TIMESTAMP_NTZ)
+
+### FACT_RETAIL_SALES
+- `transaction_id` (VARCHAR, PK)
+- `store_id` (VARCHAR)
+- `member_id` (VARCHAR, nullable)
+- `ndc` (VARCHAR, FK)
+- `sale_date` (DATE)
+- `quantity_sold` (INTEGER)
+- `retail_price` (DECIMAL(10,2))
+- `discount_amount` (DECIMAL(10,2))
+- `net_receipts` (DECIMAL(12,2))
+- `payment_method` (VARCHAR)
+- `created_at` (TIMESTAMP_NTZ)
+
+### FACT_340B_ELIGIBILITY
+- `eligibility_id` (VARCHAR, PK)
+- `covered_entity_id` (VARCHAR)
+- `covered_entity_name` (VARCHAR)
+- `site_type` (VARCHAR: FQHC, RHC, DSH, children_hospital, free_clinic, specialty)
+- `state` (VARCHAR)
+- `eligibility_start_date`, `eligibility_end_date` (DATE)
+- `is_active` (BOOLEAN)
+- `created_at` (TIMESTAMP_NTZ)
+
+### FACT_REBATE_CONTRACTS
+- `contract_id` (VARCHAR, PK)
+- `manufacturer` (VARCHAR)
+- `ndc` (VARCHAR, FK)
+- `contract_start_date`, `contract_end_date` (DATE)
+- `rebate_type` (VARCHAR: fixed_per_unit, percentage_of_acq_cost, tiered_volume, outcomes_based)
+- `rebate_value` (DECIMAL(10,4))
+- `tier_threshold_quantity` (INTEGER, nullable)
+- `created_at` (TIMESTAMP_NTZ)
+
+### FACT_DIR_FEES
+- `dir_record_id` (VARCHAR, PK)
+- `pharmacy_npi` (VARCHAR)
+- `member_id` (VARCHAR, nullable)
+- `ndc` (VARCHAR, FK)
+- `service_month` (DATE)
+- `dir_fee_amount` (DECIMAL(12,2))
+- `dir_type` (VARCHAR: clawback, performance, administrative, quality)
+- `payer_id` (VARCHAR)
+- `received_date` (TIMESTAMP_NTZ)
+- `created_at` (TIMESTAMP_NTZ)
+
+### FACT_PRIOR_AUTHORIZATIONS
+- `pa_request_id` (VARCHAR, PK)
+- `member_id` (VARCHAR, FK)
+- `prescriber_npi` (VARCHAR)
+- `ndc` (VARCHAR, FK)
+- `request_date` (DATE)
+- `decision_date` (DATE, nullable)
+- `status` (VARCHAR: approved, denied, pending, expired)
+- `approval_days` (INTEGER)
+- `created_at` (TIMESTAMP_NTZ)
+
+### DIM_PROVIDERS
+- `npi` (VARCHAR, PK)
+- `provider_name` (VARCHAR)
+- `specialty` (VARCHAR)
+- `practice_type` (VARCHAR: independent, chain, hospital, mail_order, specialty)
+- `state`, `zip_code` (VARCHAR)
+- `is_active` (BOOLEAN)
+- `created_at` (TIMESTAMP_NTZ)
